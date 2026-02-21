@@ -6,13 +6,13 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:07:19 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 14:50:51 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:41:12 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Game.hpp"
 
-Game::Game() : _running(true), _player(0, 5) {
+Game::Game() : _running(true), _player(0, 0), _enemy(0,0) {
 	initscr();
 	cbreak();
 	noecho();
@@ -21,8 +21,11 @@ Game::Game() : _running(true), _player(0, 5) {
 	curs_set(0);
 	start_color();
 	init_pair(1, COLOR_GREEN, COLOR_BLACK);
+	init_pair(2, COLOR_RED, COLOR_BLACK);
+	init_pair(3, COLOR_BLUE, COLOR_BLACK);
 	getmaxyx(stdscr, _rows, _cols);
-	_player = Player(_rows / 2, 0);
+	_player = Player(_rows / 2, 3);
+	_enemy = Enemy(_rows / 2, _cols - 3);
 }
 
 Game::~Game() {
@@ -38,7 +41,7 @@ void Game::run() {
 		auto now = std::chrono::steady_clock::now();
 		float elapsed = std::chrono::duration<float>(now - _lastTime).count();
 		if (elapsed < 1.0f / 60.0f)
-		continue;
+			continue;
 		_lastTime = now;
 		//creazione randomica nemici
 		// handleInput(elapsed);
@@ -57,6 +60,10 @@ void	Game::render() {
 	mvprintw(_player.getY(), _player.getX(), "%s", _player.getSymbol());
 	mvprintw(0, 0, "rows: %d cols: %d", _rows, _cols);
 	attroff(COLOR_PAIR(1));
+	attron(COLOR_PAIR(2));
+	mvprintw(_enemy.getY(), _enemy.getX(), "%s", _enemy.getSymbol());
+	mvprintw(0, 0, "rows: %d cols: %d", _rows, _cols);
+	attroff(COLOR_PAIR(2));
 	refresh();
 }
 

@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   GameEntity.cpp                                     :+:      :+:    :+:   */
+/*   Enemy.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/21 12:37:29 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 15:20:38 by cwannhed         ###   ########.fr       */
+/*   Created: 2026/02/21 14:59:52 by cwannhed          #+#    #+#             */
+/*   Updated: 2026/02/21 15:00:15 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "GameEntity.hpp"
+#ifndef ENEMY_HPP
+# define ENEMY_HPP
 
-GameEntity::GameEntity(float y, float x, char *symbol) : _y(y), _x(x), _symbol(symbol) {}
+# include "GameEntity.hpp"
 
-GameEntity::~GameEntity() {}
+class Enemy : public GameEntity
+{
+private:
 
-const char	*GameEntity::getSymbol() const { return _symbol; };
+public:
+	Enemy(float y, float x);
+	~Enemy();
 
-int			GameEntity::getY() const { return _y; };
+	void update(float dt);
+};
 
-int			GameEntity::getX() const { return _x; };
+#endif

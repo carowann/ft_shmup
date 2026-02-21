@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:35:56 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 14:19:59 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:19:43 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ class GameEntity
 private:
 	/* data */
 protected:
-	int			_x;
-	int			_y;
+	float		_y;
+	float		_x;
 	const char	*_symbol;
 public:
-	GameEntity(/* args */);
+	GameEntity(float y, float x, char *symbol);
 	virtual	~GameEntity();
+	virtual const char	*getSymbol() const;
+	virtual int			getY() const;
+	virtual int			getX() const;
 };
 
 

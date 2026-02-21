@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   GameEntity.cpp                                     :+:      :+:    :+:   */
+/*   Enemy.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/21 12:37:29 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 15:20:38 by cwannhed         ###   ########.fr       */
+/*   Created: 2026/02/21 14:59:30 by cwannhed          #+#    #+#             */
+/*   Updated: 2026/02/21 15:39:00 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "GameEntity.hpp"
+# include "Enemy.hpp"
 
-GameEntity::GameEntity(float y, float x, char *symbol) : _y(y), _x(x), _symbol(symbol) {}
+Enemy::Enemy(float y, float x) : GameEntity(y, x, "@") {}
 
-GameEntity::~GameEntity() {}
+Enemy::~Enemy() {}
 
-const char	*GameEntity::getSymbol() const { return _symbol; };
-
-int			GameEntity::getY() const { return _y; };
-
-int			GameEntity::getX() const { return _x; };
+// void Enemy::update(float dt)
+// {
+// 	_x -= _speed * dt;
+// 	if (_x < 0)
+// 		_alive = false;
+// }
