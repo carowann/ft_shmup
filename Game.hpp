@@ -1,19 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Window.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/21 12:08:05 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 12:09:14 by cwannhed         ###   ########.fr       */
+/*   Created: 2026/02/21 12:06:57 by cwannhed          #+#    #+#             */
+/*   Updated: 2026/02/21 12:06:58 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Game.hpp"
+#ifndef WINDOW_HPP
+# define WINDOW_HPP
 
-int main() {
-	Game game;
-	game.run();
-	return 0;
-}
+# include "ft_shmup.h"
+
+class Game {
+private:
+	int _rows;
+	int _cols;
+	bool _running;
+	// Player, vector<Enemy>, vector<Bullet>, ecc.
+
+public:
+	Game();
+	~Game();	// endwin() qui
+	void run(); // il loop principale
+
+private:
+	void handleInput();
+	void update(float dt);
+	void render();
+};
+
+#endif

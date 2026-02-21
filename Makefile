@@ -1,10 +1,21 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2026/02/21 12:09:38 by cwannhed          #+#    #+#              #
+#    Updated: 2026/02/21 12:09:46 by cwannhed         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 NAME = ft_shmup
 
 CC = c++
 
 SRC = main.cpp \
-	Window.cpp
+	Game.cpp
 
 CXXFLAGS = -Wall -Wextra -Werror -g
 LDFLAGS = -lncurses
