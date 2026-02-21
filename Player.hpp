@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Player.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: pdessant <pdessant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:44:52 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 14:51:26 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:17:31 by pdessant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ public:
 	const char	*getSymbol() const;
 	int			getY() const;
 	int			getX() const;
-	void		move(int direction);
+	//void		move(int direction);
+	void moveUp();
+	void moveDown(int maxRows);
 };
 
 

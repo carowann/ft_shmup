@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: pdessant <pdessant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:07:19 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 14:50:51 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:22:22 by pdessant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ Game::~Game() {
 void Game::run() {
 	while (_running)
 	{
-		int ch = getch();
-		if (ch == 'q')
-			_running = false;
+		// int ch = getch();
+		// if (ch == 'q')
+		// 	_running = false;
+		handleInput();
 		auto now = std::chrono::steady_clock::now();
 		float elapsed = std::chrono::duration<float>(now - _lastTime).count();
 		if (elapsed < 1.0f / 60.0f)
@@ -64,4 +65,17 @@ void	Game::handleInput() {
 	//prendera' input -> muovera' il player e/p sparera'
 	//if su o giu -> muove player
 	//if space bar -> player spara
+	int ch = getch();
+
+	switch (ch) {
+		case 'q':
+			_running = false;
+			break;
+		case KEY_UP:
+			_player.moveUp();
+			break;
+		case KEY_DOWN:
+			_player.moveDown(_rows);
+			break;
+	}
 }
