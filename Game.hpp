@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Window.hpp                                         :+:      :+:    :+:   */
+/*   Game.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:06:57 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 12:06:58 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 14:42:37 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,27 @@
 # define WINDOW_HPP
 
 # include "ft_shmup.h"
+# include "Player.hpp"
 
 class Game {
 private:
-	int _rows;
-	int _cols;
-	bool _running;
-	// Player, vector<Enemy>, vector<Bullet>, ecc.
+	int		_rows;
+	int		_cols;
+	bool	_running;
+	std::chrono::steady_clock::time_point _lastTime;
+	std::chrono::duration<float> _frameDuration;
+	Player _player;
+	//vector<Enemy>, vector<Bullet>, ecc.
 
 public:
 	Game();
-	~Game();	// endwin() qui
-	void run(); // il loop principale
+	~Game();
+	void	run();
 
 private:
-	void handleInput();
-	void update(float dt);
-	void render();
+	void	handleInput();
+	void	update(float dt);
+	void	render();
 };
 
 #endif

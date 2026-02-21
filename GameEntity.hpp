@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:35:56 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 12:38:42 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 14:19:59 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ class GameEntity
 private:
 	/* data */
 protected:
-	int	x;
-	int y;
+	int			_x;
+	int			_y;
+	const char	*_symbol;
 public:
 	GameEntity(/* args */);
-	~GameEntity();
+	virtual	~GameEntity();
 };
 
 
