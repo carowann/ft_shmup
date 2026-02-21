@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_shmup.h                                         :+:      :+:    :+:   */
+/*   GameEntity.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/21 12:35:01 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 12:35:02 by cwannhed         ###   ########.fr       */
+/*   Created: 2026/02/21 12:37:29 by cwannhed          #+#    #+#             */
+/*   Updated: 2026/02/21 12:40:10 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SHMUP_H
-# define FT_SHMUP_H
+#include "GameEntity.hpp"
 
-# include <curses.h>
+GameEntity::GameEntity(/* args */)
+{
+}
 
-# define LIVES 3
-
-#endif
+GameEntity::~GameEntity()
+{
+}

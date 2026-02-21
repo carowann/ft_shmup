@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_shmup.h                                         :+:      :+:    :+:   */
+/*   Player.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/21 12:35:01 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 12:35:02 by cwannhed         ###   ########.fr       */
+/*   Created: 2026/02/21 12:45:32 by cwannhed          #+#    #+#             */
+/*   Updated: 2026/02/21 12:45:49 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SHMUP_H
-# define FT_SHMUP_H
+#include "Player.hpp"
 
-# include <curses.h>
+Player::Player(/* args */)
+{
+}
 
-# define LIVES 3
-
-#endif
+Player::~Player()
+{
+}

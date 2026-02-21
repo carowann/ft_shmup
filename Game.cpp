@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:07:19 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 12:08:52 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 12:44:37 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,13 @@ void Game::run() {
 		int ch = getch();
 		if (ch == 'q')
 			_running = false;
-
+		//UPDATE tutto:
+		//creazione randomica nemici
+		//prendera' input -> muovera' il player e/p sparera'
+		//azioni nemico
+		//movimento continuo della pellicola
+		//controllo continuo vittoria o sconfitta -> popup
+		//RENDERING
 		clear();
 		attron(COLOR_PAIR(1));
 		mvprintw(_rows / 2, _cols / 2, "@");

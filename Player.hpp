@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_shmup.h                                         :+:      :+:    :+:   */
+/*   Player.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/21 12:35:01 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 12:35:02 by cwannhed         ###   ########.fr       */
+/*   Created: 2026/02/21 12:44:52 by cwannhed          #+#    #+#             */
+/*   Updated: 2026/02/21 12:46:23 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SHMUP_H
-# define FT_SHMUP_H
+#ifndef PLAYER_HPP
+# define PLAYER_HPP
 
-# include <curses.h>
+# include "GameEntity.hpp"
 
-# define LIVES 3
+class Player : public GameEntity
+{
+private:
+	/* data */
+public:
+	Player(/* args */);
+	~Player();
+};
+
 
 #endif
