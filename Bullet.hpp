@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 16:30:33 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 18:03:25 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 19:21:14 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ private:
 public:
 	Bullet(float y, float x, const char *b, int direction);
 	~Bullet();
-	void moveLeft();
-	void moveRight(int maxRows);
-	void update(float dt, int maxCols);
+	void	update(float dt, int maxCols);
 };
 
 

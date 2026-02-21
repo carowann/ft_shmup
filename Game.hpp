@@ -6,12 +6,12 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:06:57 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 18:49:54 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 19:12:28 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WINDOW_HPP
-# define WINDOW_HPP
+#ifndef GAME_HPP
+# define GAME_HPP
 
 # include "ft_shmup.h"
 # include "Player.hpp"
@@ -20,18 +20,18 @@
 
 class Game {
 private:
-	int		_rows;
-	int		_cols;
-	bool	_running;
-	std::chrono::steady_clock::time_point _lastTime;
-	Player	_player;
-	std::vector<Bullet>	_playerBullets;
-	std::vector<Bullet>	_enemyBullets;
-	std::vector<Enemy>	_enemies;
-	float				_shootCooldown;
-	float				_shootTimer;
-	float				_enemyTimer;
-	float				_enemyCooldown;
+	int										_rows;
+	int										_cols;
+	bool									_running;
+	std::chrono::steady_clock::time_point	_lastTime;
+	Player									_player;
+	std::vector<Bullet>						_playerBullets;
+	std::vector<Bullet>						_enemyBullets;
+	std::vector<Enemy>						_enemies;
+	float									_shootCooldown;
+	float									_shootTimer;
+	float									_enemyTimer;
+	float									_enemyCooldown;
 public:
 	Game();
 	~Game();

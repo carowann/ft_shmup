@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:35:56 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 18:14:05 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 19:22:26 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ public:
 	GameEntity(float y, float x, const char *symbol);
 	virtual	~GameEntity();
 	virtual const char	*getSymbol() const;
-	virtual float			getY() const;
-	virtual float			getX() const;
+	virtual int			getY() const;
+	virtual int			getX() const;
 	virtual bool		getAlive() const;
 	virtual void		update(float dt, int maxCols) = 0;
 };
