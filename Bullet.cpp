@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Player.hpp                                         :+:      :+:    :+:   */
+/*   Bullet.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/21 12:44:52 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 17:52:36 by cwannhed         ###   ########.fr       */
+/*   Created: 2026/02/21 16:31:42 by cwannhed          #+#    #+#             */
+/*   Updated: 2026/02/21 18:02:51 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLAYER_HPP
-# define PLAYER_HPP
+#include "Bullet.hpp"
 
-# include "GameEntity.hpp"
+Bullet::Bullet(float y, float x, const char *b, int direction) : GameEntity(y, x, b) {
+	_speed = SPEED;
+	_direction = direction;
+}
 
-class Player : public GameEntity
+void Bullet::moveRight(int maxCols) {
+	if (_x < maxCols)
+		_x++;
+}
+
+void Bullet::update(float dt, int maxCols)
 {
-private:
-	/* data */
-public:
-	Player(float y, float x);
-	~Player();
-	void	update(float dt, int maxCols);
-	void	moveUp();
-	void	moveDown(int maxRows);
-};
+	_x += _speed * dt * _direction;
+	if (_x < 0 || _x > maxCols)
+		_alive = false;
+}
 
-
-#endif
+Bullet::~Bullet() {}

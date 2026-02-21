@@ -6,7 +6,7 @@
 #    By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/21 12:09:38 by cwannhed          #+#    #+#              #
-#    Updated: 2026/02/21 15:14:18 by cwannhed         ###   ########.fr        #
+#    Updated: 2026/02/21 17:59:05 by cwannhed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRC = main.cpp \
 	Game.cpp \
 	GameEntity.cpp \
 	Player.cpp \
-	Enemy.cpp
+	Enemy.cpp \
+	Bullet.cpp
 
 CXXFLAGS = -Wall -Wextra -Werror -g
 LDFLAGS = -lncurses

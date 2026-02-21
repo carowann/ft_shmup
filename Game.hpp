@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:06:57 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 15:09:38 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 18:49:54 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft_shmup.h"
 # include "Player.hpp"
 # include "Enemy.hpp"
+# include "Bullet.hpp"
 
 class Game {
 private:
@@ -23,11 +24,14 @@ private:
 	int		_cols;
 	bool	_running;
 	std::chrono::steady_clock::time_point _lastTime;
-	std::chrono::duration<float> _frameDuration;
 	Player	_player;
-	Enemy	_enemy;
-	//vector<Enemy>, vector<Bullet>, ecc.
-
+	std::vector<Bullet>	_playerBullets;
+	std::vector<Bullet>	_enemyBullets;
+	std::vector<Enemy>	_enemies;
+	float				_shootCooldown;
+	float				_shootTimer;
+	float				_enemyTimer;
+	float				_enemyCooldown;
 public:
 	Game();
 	~Game();
@@ -35,8 +39,10 @@ public:
 
 private:
 	void	handleInput();
-	void	update(float dt);
+	void	update(float dt, int maxCols);
 	void	render();
+	void	renderTrees();
+	void	createEnemies();
 };
 
 #endif

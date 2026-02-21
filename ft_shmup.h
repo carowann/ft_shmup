@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:35:01 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 14:41:49 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/21 18:56:28 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include <curses.h>
 # include <chrono>
+# include <vector>
+# include <bits/stdc++.h>
 
-# define LIVES 3
-
+// # define LIVES 3
+# define SPEED 42
 #endif
