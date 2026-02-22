@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:06:57 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 19:12:28 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/22 10:57:55 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ private:
 	float									_shootTimer;
 	float									_enemyTimer;
 	float									_enemyCooldown;
+	float									_scrollOffset;
 public:
 	Game();
 	~Game();

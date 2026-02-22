@@ -6,13 +6,13 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:07:19 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 18:56:50 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/22 11:24:48 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Game.hpp"
 
-Game::Game() : _running(true), _player(0, 0), _shootCooldown(0.3f), _shootTimer(0.0f), _enemyTimer(0.0f), _enemyCooldown(1.0f) {
+Game::Game() : _running(true), _player(0, 0), _shootCooldown(0.3f), _shootTimer(0.0f), _enemyTimer(0.0f), _enemyCooldown(1.0f), _scrollOffset(0.0f) {
 	initscr();
 	cbreak();
 	noecho();
@@ -28,7 +28,6 @@ Game::Game() : _running(true), _player(0, 0), _shootCooldown(0.3f), _shootTimer(
 	getmaxyx(stdscr, _rows, _cols);
 	_player = Player(_rows / 2, 3);
 	_lastTime = std::chrono::steady_clock::now();
-	// mvprintw(4, 4, "enemy x: %.1f y: %.1f alive: %d", _enemy.getX(), _enemy.getY(), _enemy.getAlive());
 }
 
 Game::~Game() {
@@ -38,20 +37,12 @@ Game::~Game() {
 void Game::run() {
 	while (_running)
 	{
-		// int ch = getch();
-		// if (ch == 'q')
-		// 	_running = false;
 		handleInput();
 		auto now = std::chrono::steady_clock::now();
 		float elapsed = std::chrono::duration<float>(now - _lastTime).count();
 		if (elapsed < 1.0f / 60.0f)
 			continue;
 		_lastTime = now;
-		//creazione randomica nemici
-		//UPDATE tutto:
-		//azioni nemico
-		//movimento continuo della pellicola
-		//controllo continuo vittoria o sconfitta -> popup
 		update(elapsed, _cols);
 		render();
 	}
@@ -101,25 +92,43 @@ void	Game::handleInput() {
 void Game::renderTrees() {
 	attron(COLOR_PAIR(3));
 	int startRow = _rows - 10;
-	mvaddstr(startRow + 0, 1, "               ,@@@@@@@,");
-	mvaddstr(startRow + 1, 1, "       ,,,.   ,@@@@@@/@@,  .oo8888o.");
-	mvaddstr(startRow + 2, 1, "    ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o");
-	mvaddstr(startRow + 3, 1, "   ,%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'");
-	mvaddstr(startRow + 4, 1, "   %&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'");
-	mvaddstr(startRow + 5, 1, "   %&&%/ %&%%&&@@\\ V /@@' `88\\8 `/88'");
-	mvaddstr(startRow + 6, 1, "   `&%\\ ` /%&'    |.|        \\ '|8'");
-	mvaddstr(startRow + 7, 1, "       |o|        | |         | |");
-	mvaddstr(startRow + 8, 1, "       |.|        | |         | |");
-	mvaddstr(startRow + 9, 1, "___ \\/ ._\\//_/__/  ,\\_//__\\\\/.  \\_//__/_");
+
+	std::string lines[] = {
+		"               ,@@@@@@@,",
+		"       ,,,.   ,@@@@@@/@@,  .oo8888o.",
+		"    ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o",
+		"   ,%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'",
+		"   %&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'",
+		"   %&&%/ %&%%&&@@\\ V /@@' `88\\8 `/88'",
+		"   `&%\\ ` /%&'    |.|        \\ '|8'",
+		"       |o|        | |         | |",
+		"       |.|        | |         | |",
+		"___ \\/ ._\\//_/__/  ,\\_//__\\\\/.  \\_//__/_"};
+
+	for (int repeat = 0; repeat < NUMBER_TREES; repeat++)
+	{
+		int treeX = (int)_scrollOffset + repeat * 46;
+		for (int row = 0; row < 10; row++)
+		{
+			for (int col = 0; col < (int)lines[row].size(); col++)
+			{
+				int screenX = treeX + col;
+				if (screenX >= 0 && screenX < _cols)
+					mvaddch(startRow + row, screenX, lines[row][col]);
+			}
+		}
+	}
 	attroff(COLOR_PAIR(3));
 }
 
 void Game::update(float dt, int maxCols) {
-	// cooldown sparo
 	if (_shootTimer > 0.0f)
 		_shootTimer -= dt;
 	if (_enemyTimer > 0.0f)
 		_enemyTimer -= dt;
+	_scrollOffset -= SCROLL_SPEED * dt;
+	if (_scrollOffset <= -46.0f)
+		_scrollOffset += 46.0f;
 	createEnemies();
 	_player.update(dt, maxCols );
 	for (size_t i = 0; i < _enemies.size();)
@@ -130,7 +139,6 @@ void Game::update(float dt, int maxCols) {
 		else
 			i++;
 	}
-	// update bullet — muovi e rimuovi morti
 	for (size_t i = 0; i < _playerBullets.size();)
 	{
 		_playerBullets[i].update(dt, maxCols);
