@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:07:19 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/22 11:24:48 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/22 11:31:01 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void Game::update(float dt, int maxCols) {
 	for (size_t i = 0; i < _enemies.size();)
 	{
 		_enemies[i].update(dt, maxCols);
+		// forse qui fai sputare le lumache, altrimenti quando nascono in create enemies
 		if (!_enemies[i].getAlive())
 			_enemies.erase(_enemies.begin() + i);
 		else
@@ -147,12 +148,14 @@ void Game::update(float dt, int maxCols) {
 		else
 			i++;
 	}
+	//vari controlli di morte
+	// i bullet hanno incontrato un player o un nemico? se si -> morte
 }
 
 void Game::createEnemies() {
 	if (_enemyTimer <= 0.0f)
 	{
-		int y = rand() % (_rows) + 1; // tra 1 e _rows-12 per evitare gli alberi
+		int y = rand() % (_rows) + 1;
 		_enemies.push_back(Enemy(y, _cols - 3));
 		_enemyTimer = _enemyCooldown;
 	}
