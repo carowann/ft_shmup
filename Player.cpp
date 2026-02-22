@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:45:32 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/22 16:42:07 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/22 19:24:42 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ Player::~Player() {}
 
 void Player::update(float dt, int maxCols)
 {
-	(void)dt; // il player non ha logica autonoma
+	(void)dt;
 	(void)maxCols;
 }
 
@@ -38,6 +38,6 @@ int	Player::getLives() const{
 
 void	Player::decrementLives() {
 	_lives--;
-	if (_lives == 0)
+	if (_lives <= 0)
 		setAlive(false);
 }
