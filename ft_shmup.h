@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_shmup.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdessant <pdessant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:35:01 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/22 12:37:15 by pdessant         ###   ########.fr       */
+/*   Updated: 2026/02/22 17:56:37 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 # include <string>
 # include <algorithm>
 
-// # define LIVES 3
-# define ENEMY_SPEED	8
-# define BULLET_SPEED	40
-# define SCROLL_SPEED	20
-# define NUMBER_TREES	5
-
+# define LIVES				3
+# define ENEMY_SPEED		8
+# define BULLET_SPEED		20
+# define SCROLL_SPEED		20
+# define NUMBER_TREES		5
+# define SHOOT_PHASE_TIMER	1.0f
 #endif

@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:37:29 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 19:22:38 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/22 15:48:45 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,7 @@ int			GameEntity::getY() const { return _y; };
 int			GameEntity::getX() const { return _x; };
 
 bool		GameEntity::getAlive() const { return _alive; };
+
+void		GameEntity::setAlive(bool alive) {
+	_alive = alive;
+}

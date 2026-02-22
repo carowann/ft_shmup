@@ -1,30 +1,30 @@
 # ft_shmup - TODO
 
 ## Collisioni
-- [ ] Proiettile player colpisce nemico → entrambi (bullet e nemico) `alive = false`, score aumenta
-- [ ] Nemico raggiunge il player → player perde una vita
-- [ ] Proiettile nemico colpisce player → player perde una vita
+- [X] Proiettile player colpisce nemico → entrambi (bullet e nemico) `alive = false`, score aumenta
+- [X] Nemico raggiunge il player → player perde una vita
+- [X] Proiettile nemico colpisce player → player perde una vita
 
 ## Player
-- [ ] Aggiungere attributo `_lives` con getter
-- [ ] Logica di morte quando `_lives == 0` → `_running = false`
+- [X] Aggiungere attributo `_lives` con getter
+- [X] Logica di morte quando `_lives == 0` → `_running = false`
 
 ## Nemici che sparano
-- [ ] Aggiungere timer di sparo in `Enemy`
-- [ ] Spawn di bullet nemico nel vettore `_enemyBullets` di `Game`
-- [ ] Update e render di `_enemyBullets`
+- [X] Aggiungere timer di sparo in `Enemy`
+- [X] Spawn di bullet nemico nel vettore `_enemyBullets` di `Game`
+- [X] Update e render di `_enemyBullets`
 
 ## HUD
-- [ ] Score in alto a destra
-- [ ] Vite rimaste in alto a sinistra
-- [ ] Tempo di gioco
+- [X] Score in alto a destra
+- [X] Vite rimaste in alto a sinistra
+- [X] Tempo di gioco
 
 ## Game Over
-- [ ] Schermata finale con score quando il player muore
-- [ ] Aspetta un tasto poi esce
+- [X] Schermata finale con score quando il player muore
+- [X] Aspetta un tasto poi esce
 
 
-- [ ] Effetto pellicola/scrolling sfondo
+- [X] Effetto pellicola/scrolling sfondo
 
 ## Opzionale
 - [ ] Schermata di start prima del gioco

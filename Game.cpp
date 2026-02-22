@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Game.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdessant <pdessant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:07:19 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/22 12:40:36 by pdessant         ###   ########.fr       */
+/*   Updated: 2026/02/22 17:52:25 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Game.hpp"
 
-Game::Game() : _running(true), _player(0, 0), _shootCooldown(0.3f), _shootTimer(0.0f), _enemyTimer(0.0f), _enemyCooldown(1.0f), _scrollOffset(0.0f) {
+Game::Game() : _running(true), _player(0, 0), _shootCooldown(0.3f), _shootTimer(0.0f), _enemyTimer(0.0f), _enemyCooldown(1.0f), _scrollOffset(0.0f), _score(0) {
 	initscr();
 	cbreak();
 	noecho();
@@ -27,6 +27,7 @@ Game::Game() : _running(true), _player(0, 0), _shootCooldown(0.3f), _shootTimer(
 	srand(time(NULL));
 	getmaxyx(stdscr, _rows, _cols);
 	_player = Player(_rows / 2, 3);
+	_startTime = std::chrono::steady_clock::now();
 	_lastTime = std::chrono::steady_clock::now();
 }
 
@@ -44,30 +45,49 @@ void Game::run() {
 			continue;
 		_lastTime = now;
 		update(elapsed, _cols);
+		if (!_player.getAlive()) {
+			_running = false;
+			break;
+		}
 		render();
 	}
+	if (!_player.getAlive())
+		renderGameover();
+}
+
+void	Game::renderGameover() {
+	clear();
+	attron(COLOR_PAIR(2));
+	mvprintw(_rows / 2, _cols / 2 - 6, "Game Over :( ");
+	mvprintw(_rows / 2 + 1, _cols / 2 - 10, "You killed %d snails!", _score);
+	mvprintw(_rows / 2 + 2, _cols / 2 - 8, "Press 'q' to quit");
+	attroff(COLOR_PAIR(2));
+	refresh();
+	int ch;
+	while ((ch = getch()) != 'q')
+		;
 }
 
 void	Game::render() {
-	clear();
+	erase();
 	renderTrees();
 	attron(COLOR_PAIR(1));
 	mvprintw(_player.getY(), _player.getX(), "%s", _player.getSymbol());
-	mvprintw(0, 0, "rows: %d cols: %d", _rows, _cols);
+	int elapsed = (int)std::chrono::duration<float>(std::chrono::steady_clock::now() - _startTime).count();
+	mvprintw(0, 0, "score: %d  lives: %d  time: %ds", _score, _player.getLives(), elapsed);
 	attroff(COLOR_PAIR(1));
 	attron(COLOR_PAIR(2));
 	for (size_t i = 0; i < _enemies.size(); i++)
 		mvprintw(_enemies[i].getY(), _enemies[i].getX(), "%s", _enemies[i].getSymbol());
-	mvprintw(0, 0, "rows: %d cols: %d", _rows, _cols);
 	attroff(COLOR_PAIR(2));
-	attron(COLOR_PAIR(4));
+	attron(COLOR_PAIR(1));
 	for (size_t i = 0; i < _playerBullets.size(); i++)
 		mvprintw(_playerBullets[i].getY(), _playerBullets[i].getX(), "%s", _playerBullets[i].getSymbol());
-	attroff(COLOR_PAIR(4));
-	attron(COLOR_PAIR(2)); // rosso come i nemici     //PROVA 
+	attroff(COLOR_PAIR(1));
+	attron(COLOR_PAIR(2));
 	for (size_t i = 0; i < _enemyBullets.size(); i++)
 		mvprintw(_enemyBullets[i].getY(), _enemyBullets[i].getX(), "%s", _enemyBullets[i].getSymbol());
-	attroff(COLOR_PAIR(2));  //PROVA
+	attroff(COLOR_PAIR(2));
 	refresh();
 }
 
@@ -126,170 +146,134 @@ void Game::renderTrees() {
 }
 
 void Game::update(float dt, int maxCols) {
-    if (_shootTimer > 0.0f)
-        _shootTimer -= dt;
-    if (_enemyTimer > 0.0f)
-        _enemyTimer -= dt;
-    _scrollOffset -= SCROLL_SPEED * dt;
-    if (_scrollOffset <= -46.0f)
-        _scrollOffset += 46.0f;
+	if (_shootTimer > 0.0f)
+		_shootTimer -= dt;
+	if (_enemyTimer > 0.0f)
+		_enemyTimer -= dt;
+	_scrollOffset -= SCROLL_SPEED * dt;
+	if (_scrollOffset <= -46.0f)
+		_scrollOffset += 46.0f;
 
-    createEnemies();
-    _player.update(dt, maxCols);
+	createEnemies();
+	_player.update(dt, maxCols);
 
-    // -------------------------
-    // Aggiorna nemici e bullet
-    // -------------------------
-    for (size_t i = 0; i < _enemies.size(); i++)
-    {
-        _enemies[i].update(dt, maxCols);
+	// -------------------------
+	// Aggiorna nemici e bullet
+	// -------------------------
+	for (size_t i = 0; i < _enemies.size(); i++)
+	{
+		_enemies[i].update(dt, maxCols);
 
-        if (_enemies[i].shouldShoot())
-        {
-            _enemyBullets.push_back(
-                Bullet(_enemies[i].getY(), _enemies[i].getX() - 1, "-", -1)
-            );
-            _enemies[i].resetShootTimer();
-        }
+		if (!_enemies[i].getAlive())
+		{
+			_enemies.erase(_enemies.begin() + i);
+			i--;
+			continue; // non spara se già morto
+		}
 
-        if (!_enemies[i].getAlive())
-        {
-            _enemies.erase(_enemies.begin() + i);
-            i--; // importante perché abbiamo rimosso un elemento
-        }
-    }
+		if (_enemies[i].shouldShoot())
+		{
+			_enemyBullets.push_back(
+				Bullet(_enemies[i].getY(), _enemies[i].getX() - 1, "-", -1));
+			_enemies[i].resetShootTimer();
+		}
+	}
 
-    // -------------------------
+	// -------------------------
     // Alternanza nemici (1-2 alla volta)
     // -------------------------
-    int activeCount = 0;
-    for (size_t i = 0; i < _enemies.size(); i++)
-        if (_enemies[i].isShootingPhase()) activeCount++;
+	int activeCount = 0;
+	for (size_t i = 0; i < _enemies.size(); i++)
+		if (_enemies[i].isShootingPhase())
+			activeCount++;
 
-    if (activeCount < 2)
-    {
-        std::vector<size_t> inactiveEnemies;
-        for (size_t i = 0; i < _enemies.size(); i++)
-            if (!_enemies[i].isShootingPhase()) inactiveEnemies.push_back(i);
+	if (activeCount < 2) {
+		std::vector<size_t> inactiveEnemies;
+		for (size_t i = 0; i < _enemies.size(); i++)
+			if (!_enemies[i].isShootingPhase())
+				inactiveEnemies.push_back(i);
 
-        int toActivate = 1 + (rand() % 2); // 1 o 2 nemici
-        for (int j = 0; j < toActivate && !inactiveEnemies.empty(); j++)
-        {
-            size_t idx = inactiveEnemies[rand() % inactiveEnemies.size()];
-            _enemies[idx].startShootingPhase();
+		int toActivate = 1 + (rand() % 2); // 1 o 2 nemici
+		for (int j = 0; j < toActivate && !inactiveEnemies.empty(); j++) {
+			size_t idx = inactiveEnemies[rand() % inactiveEnemies.size()];
+			_enemies[idx].startShootingPhase();
+			inactiveEnemies.erase(
+				std::remove(inactiveEnemies.begin(), inactiveEnemies.end(), idx),
+				inactiveEnemies.end());
+		}
+	}
 
-            inactiveEnemies.erase(
-                std::remove(inactiveEnemies.begin(), inactiveEnemies.end(), idx),
-                inactiveEnemies.end()
-            );
-        }
-    }
+	// -------------------------
+	// Aggiorna bullets player
+	// -------------------------
+	for (size_t i = 0; i < _playerBullets.size();) {
+		_playerBullets[i].update(dt, maxCols);
+		if (!_playerBullets[i].getAlive())
+			_playerBullets.erase(_playerBullets.begin() + i);
+		else
+			i++;
+	}
 
-    // -------------------------
-    // Aggiorna bullets player
-    // -------------------------
-    for (size_t i = 0; i < _playerBullets.size();)
-    {
-        _playerBullets[i].update(dt, maxCols);
-        if (!_playerBullets[i].getAlive())
-            _playerBullets.erase(_playerBullets.begin() + i);
-        else
-            i++;
-    }
+	// -------------------------
+	// Aggiorna bullets nemici
+	// -------------------------
+	for (size_t i = 0; i < _enemyBullets.size();) {
+		_enemyBullets[i].update(dt, maxCols);
+		if (!_enemyBullets[i].getAlive())
+			_enemyBullets.erase(_enemyBullets.begin() + i);
+		else
+			i++;
+	}
 
-    // -------------------------
-    // Aggiorna bullets nemici
-    // -------------------------
-    for (size_t i = 0; i < _enemyBullets.size();)
-    {
-        _enemyBullets[i].update(dt, maxCols);
-        if (!_enemyBullets[i].getAlive())
-            _enemyBullets.erase(_enemyBullets.begin() + i);
-        else
-            i++;
-    }
-
-    // -------------------------
+	// -------------------------
     // qui eventuali collisioni / morte
     // -------------------------
+	//per ogni bullet nemico, controllo se ha colpito player
+	for (size_t i = 0; i < _enemyBullets.size(); i++) {
+		if ((int)_enemyBullets[i].getX() == _player.getX() &&
+			(int)_enemyBullets[i].getY() == _player.getY())
+		{
+			_player.decrementLives();
+			break;
+		}
+	}
+	//per ogni bullet di player, controllo se ha preso un nemico
+	for (size_t i = 0; i < _playerBullets.size(); i++) {
+		for (size_t j = 0; j < _enemies.size(); j++) {
+			if ((int)_playerBullets[i].getX() == _enemies[j].getX() &&
+			(int)_playerBullets[i].getY() == _enemies[j].getY()) {
+			_enemies[j].setAlive(false);
+			_enemies.erase(_enemies.begin() + j);
+			_score++;
+			_playerBullets.erase(_playerBullets.begin() + i);
+			if (i > 0)
+				i--;
+			break;
+			}
+		}
+	}
+	// per ogni bullet nemico, controllo se ha preso un bullet player
+	for (size_t i = 0; i < _playerBullets.size(); i++ ) {
+		for (size_t j = 0; j < _enemyBullets.size(); j++) {
+			if ((int)_playerBullets[i].getX() == (int)_enemyBullets[j].getX() &&
+				(int)_playerBullets[i].getY() == (int)_enemyBullets[j].getY()) {
+				_enemyBullets.erase(_enemyBullets.begin() + j);
+				_playerBullets.erase(_playerBullets.begin() + i);
+				i--;
+				break;
+			}
+		}
+	}
+	// per ogni nemico, controllo collisione con player
+	for (size_t i = 0; i < _enemies.size(); i++) {
+		if ((int)_enemies[i].getX() == _player.getX() &&
+			(int)_enemies[i].getY() == _player.getY())
+		{
+			_player.decrementLives();
+			break;
+		}
+	}
 }
-
-// void Game::update(float dt, int maxCols) {
-// 	if (_shootTimer > 0.0f)
-// 		_shootTimer -= dt;
-// 	if (_enemyTimer > 0.0f)
-// 		_enemyTimer -= dt;
-// 	_scrollOffset -= SCROLL_SPEED * dt;
-// 	if (_scrollOffset <= -46.0f)
-// 		_scrollOffset += 46.0f;
-// 	createEnemies();
-// 	_player.update(dt, maxCols );
-// 	for (size_t i = 0; i < _enemies.size();)
-// 	{
-// 		_enemies[i].update(dt, maxCols);
-// 		// forse qui fai sputare le lumache, altrimenti quando nascono in create enemies
-// 		// Aggiorna nemici e bullet
-// 		for (size_t i = 0; i < _enemies.size(); i++) //PROVA
-// 		{
-// 			_enemies[i].update(dt, maxCols);
-
-// 			if (_enemies[i].shouldShoot())
-// 			{
-// 				_enemyBullets.push_back(
-// 					Bullet(_enemies[i].getY(), _enemies[i].getX() - 1, "-", -1)
-// 				);
-// 				_enemies[i].resetShootTimer();
-// 			}
-
-// 			if (!_enemies[i].getAlive())
-// 			{
-// 				_enemies.erase(_enemies.begin() + i);
-// 				i--;
-// 			}
-// 		}
-
-// 		// Controlla quanti nemici sono attivi
-// 		int activeCount = 0;
-// 		for (size_t i = 0; i < _enemies.size(); i++)
-// 			if (_enemies[i].isShootingPhase()) activeCount++;
-
-// 		// Solo se meno di 2 nemici stanno sparando, attiva uno o due inattivi
-// 		if (activeCount < 2)
-// 		{
-// 			std::vector<size_t> inactiveEnemies;
-// 			for (size_t i = 0; i < _enemies.size(); i++)
-// 				if (!_enemies[i].isShootingPhase()) inactiveEnemies.push_back(i);
-
-// 			int toActivate = 1 + (rand() % 2); // 1 o 2 nemici alla volta
-// 			for (int j = 0; j < toActivate && !inactiveEnemies.empty(); j++)
-// 			{
-// 				size_t idx = inactiveEnemies[rand() % inactiveEnemies.size()];
-// 				_enemies[idx].startShootingPhase();
-// 				inactiveEnemies.erase(
-// 					std::remove(inactiveEnemies.begin(), inactiveEnemies.end(), idx),
-// 					inactiveEnemies.end()
-// 				);
-// 			}
-// 		} //PROVA
-// 	for (size_t i = 0; i < _playerBullets.size();)
-// 	{
-// 		_playerBullets[i].update(dt, maxCols);
-// 		if (!_playerBullets[i].getAlive())
-// 			_playerBullets.erase(_playerBullets.begin() + i);
-// 		else
-// 			i++;
-// 	}
-// 	for (size_t i = 0; i < _enemyBullets.size();) //prova aggiornamento bullet nemici
-// 	{
-// 		_enemyBullets[i].update(dt, maxCols);
-// 		if (!_enemyBullets[i].getAlive())
-// 			_enemyBullets.erase(_enemyBullets.begin() + i);
-// 		else
-// 			i++;
-// 	}		//prova aggiornamento bullet nemici
-// 	//vari controlli di morte
-// 	// i bullet hanno incontrato un player o un nemico? se si -> morte
-// }
 
 void Game::createEnemies() {
 	if (_enemyTimer <= 0.0f)

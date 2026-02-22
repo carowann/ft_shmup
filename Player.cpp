@@ -6,13 +6,13 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:45:32 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 18:01:01 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/22 16:42:07 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Player.hpp"
 
-Player::Player(float y, float x) : GameEntity(y, x, ">") {}
+Player::Player(float y, float x) : GameEntity(y, x, ">"), _lives(LIVES) {}
 
 void	Player::moveUp() {
 	if (_y > 1)
@@ -30,4 +30,14 @@ void Player::update(float dt, int maxCols)
 {
 	(void)dt; // il player non ha logica autonoma
 	(void)maxCols;
+}
+
+int	Player::getLives() const{
+	return (_lives);
+}
+
+void	Player::decrementLives() {
+	_lives--;
+	if (_lives == 0)
+		setAlive(false);
 }

@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:06:57 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/22 10:57:55 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/22 16:48:35 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ private:
 	int										_rows;
 	int										_cols;
 	bool									_running;
+	std::chrono::steady_clock::time_point	_startTime;
 	std::chrono::steady_clock::time_point	_lastTime;
 	Player									_player;
 	std::vector<Bullet>						_playerBullets;
@@ -33,6 +34,7 @@ private:
 	float									_enemyTimer;
 	float									_enemyCooldown;
 	float									_scrollOffset;
+	int										_score;
 public:
 	Game();
 	~Game();
@@ -42,6 +44,7 @@ private:
 	void	handleInput();
 	void	update(float dt, int maxCols);
 	void	render();
+	void	renderGameover();
 	void	renderTrees();
 	void	createEnemies();
 };

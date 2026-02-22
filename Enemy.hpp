@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Enemy.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdessant <pdessant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 14:59:52 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/22 12:31:06 by pdessant         ###   ########.fr       */
+/*   Updated: 2026/02/22 15:42:49 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ class Enemy : public GameEntity
 {
 private:
 	float	_speed;
-	float _shootTimer;  // tempo rimasto al prossimo sparo  //PROVA
-	float _shootPhaseTimer; // tempo rimasto nello stato attivo //PROVA
-    bool  _canShoot;        // se attualmente sta sparando  //PROVA
+	float	_shootTimer;		// tempo rimasto al prossimo sparo
+	float	_shootPhaseTimer; // tempo rimasto nello stato attivo
+	bool	_canShoot;			// se attualmente sta sparando
 public:
 	Enemy(float y, float x);
 	~Enemy();
 
 	void update(float dt, int maxCols);
-	
-	bool shouldShoot() { return _canShoot && _shootTimer <= 0.0f; }  //PROVA
-    void resetShootTimer();     // prossimo sparo breve (0.1-0.5s)   //PROVA
-    void startShootingPhase();  // inizia fase sparo di 5 sec    //PROVA
-    void stopShootingPhase();   // fine fase sparo    //PROVA
-    bool isShootingPhase() { return _canShoot; }    //PROVA
+
+	bool shouldShoot() { return _canShoot && _shootTimer <= 0.0f; }
+	void resetShootTimer();											
+	void startShootingPhase();
+	void stopShootingPhase();
+	bool isShootingPhase() { return _canShoot; }
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 16:30:33 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/21 19:21:14 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/22 15:39:18 by cwannhed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ class Bullet : public GameEntity
 {
 private:
 	float	_speed;
-	int		_direction; // +1 destra (player), -1 sinistra (nemico)
+	int		_direction;
 
 public:
 	Bullet(float y, float x, const char *b, int direction);
