@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_shmup.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cwannhed <cwannhed@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: pdessant <pdessant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 12:35:01 by cwannhed          #+#    #+#             */
-/*   Updated: 2026/02/22 11:23:12 by cwannhed         ###   ########.fr       */
+/*   Updated: 2026/02/22 12:37:15 by pdessant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <cstdlib>
 # include <ctime>
 # include <string>
+# include <algorithm>
 
 // # define LIVES 3
 # define ENEMY_SPEED	8
